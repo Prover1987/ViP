@@ -11,7 +11,7 @@ h1, .heading {
 h2, .subheading {
   @apply font-sans text-subheading font-medium;
 }
-p, .text-base {
+p {
   @apply text-base font-sans;
 }
 a {

@@ -1,18 +1,17 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import {
-  Bars3Icon,
   HomeIcon,
-  UserGroupIcon,
+  UserIcon,
   BookOpenIcon,
   ChartBarIcon,
-  XMarkIcon,
+  Bars3Icon,
 } from '@heroicons/react/24/outline';
-import { Link, Outlet, useLocation } from 'react-router-dom';
 
 const navigation = [
   { name: 'Главная', href: '/', icon: HomeIcon },
-  { name: 'Профиль', href: '/profile', icon: UserGroupIcon },
+  { name: 'Профиль', href: '/profile', icon: UserIcon },
   { name: 'Обучение', href: '/courses', icon: BookOpenIcon },
   { name: 'Прогресс', href: '/progress', icon: ChartBarIcon },
 ];

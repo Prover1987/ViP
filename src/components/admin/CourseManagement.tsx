@@ -26,6 +26,7 @@ export default function CourseManagement() {
           id: '1',
           title: 'Основы React',
           content: 'Введение в компоненты и JSX',
+          duration: 45,
         },
       ],
     },
@@ -42,6 +43,10 @@ export default function CourseManagement() {
   const handleAddLesson = (course: Course) => {
     setSelectedCourse(course);
     setIsAddingLesson(true);
+  };
+
+  const handleDeleteCourse = (courseId: string) => {
+    setCourses(courses.filter(course => course.id !== courseId));
   };
 
   return (
@@ -86,6 +91,7 @@ export default function CourseManagement() {
                       Редактировать
                     </button>
                     <button
+                      onClick={() => handleDeleteCourse(course.id)}
                       className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                     >
                       <TrashIcon className="-ml-1 mr-1 h-4 w-4" />

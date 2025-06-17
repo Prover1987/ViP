@@ -53,12 +53,12 @@ export default function Courses() {
                   <div className="relative pt-1">
                     <div className="flex mb-2 items-center justify-between">
                       <div>
-                        <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200">
+                        <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-opal-green bg-opal-green/20">
                           Прогресс
                         </span>
                       </div>
                       <div className="text-right">
-                        <span className="text-xs font-semibold inline-block text-blue-600">
+                        <span className="text-xs font-semibold inline-block text-opal-green">
                           {course.progress}%
                         </span>
                       </div>

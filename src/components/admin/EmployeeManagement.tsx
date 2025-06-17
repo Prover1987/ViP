@@ -12,7 +12,18 @@ interface Employee {
 }
 
 export default function EmployeeManagement() {
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [employees, setEmployees] = useState<Employee[]>([
+    {
+      id: '1',
+      name: 'Иван Иванов',
+      email: 'ivan@example.com',
+      position: 'Разработчик',
+      department: 'IT',
+      role: 'admin',
+      status: 'active',
+    },
+  ]);
+
   const [isAddingEmployee, setIsAddingEmployee] = useState(false);
   const [isEditingEmployee, setIsEditingEmployee] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
@@ -125,7 +136,25 @@ export default function EmployeeManagement() {
         </table>
       </div>
 
-      {/* Модальные окна для добавления и редактирования сотрудников будут добавлены позже */}
+      {isAddingEmployee && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Добавить нового сотрудника</h3>
+            {/* Форма добавления сотрудника */}
+          </div>
+        </div>
+      )}
+
+      {isEditingEmployee && selectedEmployee && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Редактировать сотрудника "{selectedEmployee.name}"
+            </h3>
+            {/* Форма редактирования сотрудника */}
+          </div>
+        </div>
+      )}
     </div>
   );
 } 

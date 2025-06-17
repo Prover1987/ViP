@@ -16,7 +16,21 @@ interface Lesson {
 }
 
 export default function CourseManagement() {
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<Course[]>([
+    {
+      id: '1',
+      title: 'Введение в React',
+      description: 'Базовый курс по разработке на React',
+      lessons: [
+        {
+          id: '1',
+          title: 'Основы React',
+          content: 'Введение в компоненты и JSX',
+        },
+      ],
+    },
+  ]);
+
   const [isAddingCourse, setIsAddingCourse] = useState(false);
   const [isAddingLesson, setIsAddingLesson] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
@@ -25,8 +39,8 @@ export default function CourseManagement() {
     setIsAddingCourse(true);
   };
 
-  const handleAddLesson = (courseId: string) => {
-    setSelectedCourse(courses.find(c => c.id === courseId) || null);
+  const handleAddLesson = (course: Course) => {
+    setSelectedCourse(course);
     setIsAddingLesson(true);
   };
 
@@ -59,7 +73,7 @@ export default function CourseManagement() {
                   </div>
                   <div className="flex space-x-2">
                     <button
-                      onClick={() => handleAddLesson(course.id)}
+                      onClick={() => handleAddLesson(course)}
                       className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                       <PlusIcon className="-ml-1 mr-1 h-4 w-4" />
@@ -112,7 +126,25 @@ export default function CourseManagement() {
         </ul>
       </div>
 
-      {/* Модальные окна для добавления курса и урока будут добавлены позже */}
+      {isAddingCourse && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Добавить новый курс</h3>
+            {/* Форма добавления курса */}
+          </div>
+        </div>
+      )}
+
+      {isAddingLesson && selectedCourse && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Добавить урок в курс "{selectedCourse.title}"
+            </h3>
+            {/* Форма добавления урока */}
+          </div>
+        </div>
+      )}
     </div>
   );
 } 

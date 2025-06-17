@@ -18,8 +18,7 @@ export default function NewsManagement() {
       date: '2024-06-17',
     },
   ]);
-  const [isAddingNews, setIsAddingNews] = useState(false);
-      
+ 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -49,7 +48,6 @@ export default function NewsManagement() {
           ))}
         </ul>
       </div>
-
       {isAddingNews && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
           <div className="bg-white rounded-lg p-6 max-w-md w-full">

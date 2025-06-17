@@ -19,9 +19,13 @@ export default function NewsManagement() {
       date: '2024-06-17',
     },
   ]);
-  const [isAddingNews] = useState(false);
+  const [isAddingNews, setIsAddingNews] = useState(false);
 
   const handleAddNews = () => {
+    // ...
+  };
+
+  const handleEditNews = (item: News) => {
     // ...
   };
 
@@ -29,8 +33,12 @@ export default function NewsManagement() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="subheading text-spruce-dark">Управление новостями</h2>
-        <button onClick={handleAddNews} className="btn">
-          <PlusIcon className="-ml-1 mr-2 h-5 w-5" />Добавить новость
+        <button
+          type="button"
+          className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-floral-white bg-spruce-dark hover:bg-opal-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opal-green transition-colors"
+          onClick={() => setIsAddingNews(true)}
+        >
+          Добавить новость
         </button>
       </div>
       <div className="bg-floral-white border border-sea-green rounded-lg shadow overflow-hidden">
@@ -45,7 +53,13 @@ export default function NewsManagement() {
                     <span className="text-opal-green text-sm">Автор: {item.author}</span>
                   </div>
                   <div className="flex space-x-2">
-                    <button className="btn bg-sea-green text-spruce-dark hover:bg-opal-green"><PencilIcon className="-ml-1 mr-1 h-4 w-4" />Редактировать</button>
+                    <button
+                      type="button"
+                      className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-floral-white bg-spruce-dark hover:bg-opal-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opal-green transition-colors mr-2"
+                      onClick={() => handleEditNews(item)}
+                    >
+                      Редактировать
+                    </button>
                     <button className="btn bg-scarlet-red text-floral-white hover:bg-opal-green"><TrashIcon className="-ml-1 mr-1 h-4 w-4" />Удалить</button>
                   </div>
                 </div>

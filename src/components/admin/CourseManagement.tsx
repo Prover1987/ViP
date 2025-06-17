@@ -54,8 +54,9 @@ export default function CourseManagement() {
       <div className="flex justify-between items-center">
         <h2 className="subheading text-spruce-dark">Управление курсами</h2>
         <button
-          onClick={handleAddCourse}
-          className="btn"
+          type="button"
+          className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-floral-white bg-spruce-dark hover:bg-opal-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opal-green transition-colors"
+          onClick={() => setIsAddingCourse(true)}
         >
           <PlusIcon className="-ml-1 mr-2 h-5 w-5" />
           Добавить курс
@@ -72,11 +73,19 @@ export default function CourseManagement() {
                     <p className="mt-1 text-base text-spruce-dark/80">{course.description}</p>
                   </div>
                   <div className="flex space-x-2">
-                    <button onClick={() => handleAddLesson(course)} className="btn bg-opal-green text-floral-white hover:bg-spruce-dark">
+                    <button
+                      type="button"
+                      className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-floral-white bg-spruce-dark hover:bg-opal-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opal-green transition-colors"
+                      onClick={() => handleAddLesson(course)}
+                    >
                       <PlusIcon className="-ml-1 mr-1 h-4 w-4" />Урок
                     </button>
-                    <button className="btn bg-sea-green text-spruce-dark hover:bg-opal-green">
-                      <PencilIcon className="-ml-1 mr-1 h-4 w-4" />Редактировать
+                    <button
+                      type="button"
+                      className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-floral-white bg-spruce-dark hover:bg-opal-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opal-green transition-colors mr-2"
+                      onClick={() => setIsAddingLesson(true)}
+                    >
+                      Редактировать
                     </button>
                     <button onClick={() => handleDeleteCourse(course.id)} className="btn bg-scarlet-red text-floral-white hover:bg-opal-green">
                       <TrashIcon className="-ml-1 mr-1 h-4 w-4" />Удалить

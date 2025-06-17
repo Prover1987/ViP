@@ -17,17 +17,12 @@ function App() {
     setUserRole(role);
   };
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    setUserRole(null);
-  };
-
   return (
     <Router>
       {!isAuthenticated ? (
         <Login onLogin={handleLogin} />
       ) : (
-        <Layout onLogout={handleLogout}>
+        <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />

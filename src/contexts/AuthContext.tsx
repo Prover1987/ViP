@@ -16,8 +16,8 @@ const mockUser: User = {
   fullName: 'Иван Иванов',
   position: 'Старший разработчик',
   department: 'IT',
-  email: 'ivan@example.com',
-  role: 'employee',
+  email: 'admin@gmail.com',
+  role: 'admin',
 };
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -25,7 +25,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, password: string) => {
     // In a real application, this would make an API call
-    if (email === 'ivan@example.com' && password === 'password') {
+    if (email === 'admin@gmail.com' && password === 'password') {
       setUser(mockUser);
     } else {
       throw new Error('Неверный email или пароль');

@@ -28,16 +28,6 @@ export default function NewsManagement() {
     setIsAddingNews(true);
   };
 
-  const handleEditNews = (news: News) => {
-    setSelectedNews(news);
-    setIsEditingNews(true);
-  };
-
-  const handleDeleteNews = (newsId: string) => {
-    // Здесь будет логика удаления новости
-    setNews(news.filter(item => item.id !== newsId));
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">

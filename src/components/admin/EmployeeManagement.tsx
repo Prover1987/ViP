@@ -32,16 +32,6 @@ export default function EmployeeManagement() {
     setIsAddingEmployee(true);
   };
 
-  const handleEditEmployee = (employee: Employee) => {
-    setSelectedEmployee(employee);
-    setIsEditingEmployee(true);
-  };
-
-  const handleDeleteEmployee = (employeeId: string) => {
-    // Здесь будет логика удаления сотрудника
-    setEmployees(employees.filter(emp => emp.id !== employeeId));
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">

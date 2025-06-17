@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface LoginProps {
-  onLogin: (role: 'admin' | 'employee') => void;
+  onLogin: (email: string, password: string) => Promise<void>;
 }
 
 export default function Login({ onLogin }: LoginProps) {
@@ -12,15 +12,14 @@ export default function Login({ onLogin }: LoginProps) {
     password: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Здесь будет логика аутентификации
-    // Временная заглушка для демонстрации
-    if (formData.email && formData.password) {
-      // Для демонстрации: если email содержит "admin", то вход как админ
-      const role = formData.email.includes('admin') ? 'admin' : 'employee';
-      onLogin(role);
+    try {
+      await onLogin(formData.email, formData.password);
       navigate('/');
+    } catch (error) {
+      console.error(error);
+      // Здесь можно добавить логику отображения ошибки в UI
     }
   };
 

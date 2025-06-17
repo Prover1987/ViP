@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import Layout from './components/Layout';
 import Home from './components/Home';
 import Profile from './components/Profile';
@@ -7,14 +7,26 @@ import Courses from './components/Courses';
 import Progress from './components/Progress';
 import Login from './components/Login';
 import AdminPanel from './components/admin/AdminPanel';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 
-function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userRole, setUserRole] = useState<'admin' | 'employee' | null>(null);
+function AppContent() {
+  const { user, login, isAuthenticated } = useAuth();
 
-  const handleLogin = (role: 'admin' | 'employee') => {
-    setIsAuthenticated(true);
-    setUserRole(role);
+  useEffect(() => {
+    // В реальном приложении здесь может быть проверка токена или сессии
+    // Для демо, если пользователь существует в контексте, считаем его авторизованным
+    if (user) {
+      // Если AuthProvider инициализирует пользователя не null, это сработает
+    }
+  }, [user]);
+
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      await login(email, password);
+    } catch (error) {
+      console.error(error);
+      // Здесь можно добавить логику отображения ошибки в UI
+    }
   };
 
   return (
@@ -28,7 +40,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/progress" element={<Progress />} />
-            {userRole === 'admin' && (
+            {user?.role === 'admin' && (
               <Route path="/admin" element={<AdminPanel />} />
             )}
             <Route path="*" element={<Navigate to="/" replace />} />
@@ -36,6 +48,14 @@ function App() {
         </Layout>
       )}
     </Router>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 

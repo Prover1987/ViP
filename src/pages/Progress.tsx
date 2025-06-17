@@ -1,5 +1,3 @@
-import { useAuth } from '../contexts/AuthContext';
-
 const courses = [
   'React для начинающих',
   'TypeScript основы',

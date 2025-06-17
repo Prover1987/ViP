@@ -18,7 +18,7 @@ a {
   @apply text-opal-green hover:text-scarlet-red transition-colors;
 }
 button, .btn {
-  @apply bg-spruce-dark text-floral-white rounded px-4 py-2 font-sans font-medium hover:bg-opal-green transition-colors;
+  @apply bg-spruce-dark text-floral-white rounded-lg px-6 py-3 font-sans font-medium hover:bg-opal-green transition-colors shadow-md hover:shadow-lg;
 }
 
 @layer base {
@@ -28,19 +28,11 @@ button, .btn {
 }
 
 @layer components {
-  .btn-primary {
-    @apply px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors;
-  }
-  
-  .btn-secondary {
-    @apply px-4 py-2 bg-secondary-500 text-white rounded-lg hover:bg-secondary-600 transition-colors;
-  }
-
   .card {
-    @apply bg-white rounded-xl shadow-md p-6;
+    @apply bg-floral-white rounded-xl shadow-lg p-8 border border-sea-green;
   }
 
   .input-field {
-    @apply w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500;
+    @apply w-full rounded-lg border-sea-green focus:border-opal-green focus:ring-opal-green shadow-sm p-3 text-spruce-dark;
   }
 } 

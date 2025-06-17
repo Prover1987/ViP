@@ -33,13 +33,13 @@ export default function Login({ onLogin }: LoginProps) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-floral-white text-spruce-dark py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 card">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="heading text-center">
             Вход в систему
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-base text-spruce-dark/70">
             Введите свои учетные данные
           </p>
         </div>
@@ -54,7 +54,7 @@ export default function Login({ onLogin }: LoginProps) {
                 name="email"
                 type="email"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="input-field"
                 placeholder="Email"
                 value={formData.email}
                 onChange={handleChange}
@@ -69,7 +69,7 @@ export default function Login({ onLogin }: LoginProps) {
                 name="password"
                 type="password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="input-field mt-3"
                 placeholder="Пароль"
                 value={formData.password}
                 onChange={handleChange}
@@ -80,7 +80,7 @@ export default function Login({ onLogin }: LoginProps) {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="btn w-full"
             >
               Войти
             </button>

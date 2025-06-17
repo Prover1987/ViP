@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
+// Temporary comment to test file editing
+
 interface Course {
   id: string;
   title: string;
@@ -35,10 +37,6 @@ export default function CourseManagement() {
   const [isAddingCourse, setIsAddingCourse] = useState(false);
   const [isAddingLesson, setIsAddingLesson] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
-
-  const handleAddCourse = () => {
-    setIsAddingCourse(true);
-  };
 
   const handleAddLesson = (course: Course) => {
     setSelectedCourse(course);

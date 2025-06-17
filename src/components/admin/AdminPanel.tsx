@@ -57,13 +57,7 @@ export default function AdminPanel() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`
-                whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
-                ${activeTab === tab.id
-                  ? 'border-opal-green text-opal-green'
-                  : 'border-transparent text-spruce-dark/70 hover:text-opal-green hover:border-opal-green/50'
-                }
-              `}
+              className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-floral-white bg-spruce-dark hover:bg-opal-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opal-green transition-colors"
             >
               {tab.name}
             </button>

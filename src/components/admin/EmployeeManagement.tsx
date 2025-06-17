@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { PlusIcon } from '@heroicons/react/24/outline';
 
 interface Employee {
   id: string;
@@ -12,7 +12,7 @@ interface Employee {
 }
 
 export default function EmployeeManagement() {
-  const [employees, setEmployees] = useState<Employee[]>([
+  const [employees] = useState<Employee[]>([
     {
       id: '1',
       name: 'Иван Иванов',
@@ -24,12 +24,6 @@ export default function EmployeeManagement() {
     },
   ]);
   const [isAddingEmployee, setIsAddingEmployee] = useState(false);
-  const [isEditingEmployee, setIsEditingEmployee] = useState(false);
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
-
-  const handleDeleteEmployee = (employeeId: string) => {
-    setEmployees(employees.filter(emp => emp.id !== employeeId));
-  };
 
   return (
     <div className="space-y-6">
@@ -54,14 +48,6 @@ export default function EmployeeManagement() {
                   <span className="text-opal-green text-sm">{employee.email}</span>
                 </div>
                 <div className="flex space-x-2">
-                  <button
-                    type="button"
-                    className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-floral-white bg-spruce-dark hover:bg-opal-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opal-green transition-colors mr-2"
-                    onClick={() => setIsEditingEmployee(true)}
-                  >
-                    <PencilIcon className="-ml-1 mr-1 h-4 w-4" />Редактировать
-                  </button>
-                  <button className="btn bg-scarlet-red text-floral-white hover:bg-opal-green"><TrashIcon className="-ml-1 mr-1 h-4 w-4" />Удалить</button>
                 </div>
               </div>
             </li>

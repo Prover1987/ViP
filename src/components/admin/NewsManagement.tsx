@@ -10,22 +10,19 @@ interface News {
 }
 
 export default function NewsManagement() {
-  const [news, setNews] = useState<News[]>([
+  const [news] = useState<News[]>([
     {
       id: '1',
-      title: 'Новый курс по React',
-      content: 'Мы рады представить новый курс по разработке на React',
-      author: 'Администратор',
-      date: '2024-03-15',
+      title: 'Новый курс по React!',
+      content: 'Запущен новый курс по React для начинающих.',
+      author: 'Админ',
+      date: '2024-06-17',
     },
   ]);
-
-  const [isAddingNews, setIsAddingNews] = useState(false);
-  const [isEditingNews, setIsEditingNews] = useState(false);
-  const [selectedNews, setSelectedNews] = useState<News | null>(null);
+  const [isAddingNews] = useState(false);
 
   const handleAddNews = () => {
-    setIsAddingNews(true);
+    // ...
   };
 
   return (
@@ -63,17 +60,6 @@ export default function NewsManagement() {
           <div className="bg-white rounded-lg p-6 max-w-md w-full">
             <h3 className="text-lg font-medium text-gray-900 mb-4">Добавить новую новость</h3>
             {/* Форма добавления новости */}
-          </div>
-        </div>
-      )}
-
-      {isEditingNews && selectedNews && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">
-              Редактировать новость "{selectedNews.title}"
-            </h3>
-            {/* Форма редактирования новости */}
           </div>
         </div>
       )}

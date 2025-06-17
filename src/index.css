@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply bg-floral-white text-spruce-dark font-sans;
+}
+h1, .heading {
+  @apply font-heading text-heading font-bold;
+}
+h2, .subheading {
+  @apply font-sans text-subheading font-medium;
+}
+p, .text-base {
+  @apply text-base font-sans;
+}
+a {
+  @apply text-opal-green hover:text-scarlet-red transition-colors;
+}
+button, .btn {
+  @apply bg-spruce-dark text-floral-white rounded px-4 py-2 font-sans font-medium hover:bg-opal-green transition-colors;
+}
+
 @layer base {
   body {
     @apply bg-gray-50 text-gray-900;

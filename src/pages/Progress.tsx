@@ -1,44 +1,26 @@
 const courses = [
-  'React для начинающих',
-  'TypeScript основы',
-  'Tailwind CSS мастер-класс',
+  { title: 'React для начинающих', progress: 75 },
+  { title: 'TypeScript основы', progress: 30 },
+  { title: 'Tailwind CSS мастер-класс', progress: 90 },
 ];
 
 export default function Progress() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">
-            Прогресс обучения
-          </h3>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">
-            Статус прохождения курсов
-          </p>
-        </div>
-        <div className="border-t border-gray-200">
-          <div className="px-4 py-5 sm:p-6">
-            <div className="space-y-6">
-              {courses.map((course, index) => (
-                <div key={index}>
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-sm font-medium text-gray-900">{course}</h3>
-                    <span className="text-sm text-gray-500">
-                      {index === 0 ? '75%' : index === 1 ? '30%' : '90%'}
-                    </span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-blue-600 h-2 rounded-full"
-                      style={{
-                        width: index === 0 ? '75%' : index === 1 ? '30%' : '90%',
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
+    <div className="max-w-3xl mx-auto py-12 px-4">
+      <h1 className="heading mb-8">Прогресс обучения</h1>
+      <div className="bg-floral-white border border-sea-green rounded-lg shadow p-8">
+        <div className="space-y-6">
+          {courses.map((course, idx) => (
+            <div key={idx}>
+              <div className="flex items-center justify-between mb-1">
+                <span className="font-medium text-spruce-dark">{course.title}</span>
+                <span className="text-xs text-opal-green">{course.progress}%</span>
+              </div>
+              <div className="w-full bg-sea-green/30 rounded-full h-2">
+                <div className="bg-opal-green h-2 rounded-full" style={{ width: `${course.progress}%` }} />
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

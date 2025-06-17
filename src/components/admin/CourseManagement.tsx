@@ -52,74 +52,50 @@ export default function CourseManagement() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-medium text-gray-900">Управление курсами</h2>
+        <h2 className="subheading text-spruce-dark">Управление курсами</h2>
         <button
           onClick={handleAddCourse}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className="btn"
         >
           <PlusIcon className="-ml-1 mr-2 h-5 w-5" />
           Добавить курс
         </button>
       </div>
-
-      <div className="bg-white shadow overflow-hidden sm:rounded-md">
-        <ul className="divide-y divide-gray-200">
+      <div className="bg-floral-white border border-sea-green rounded-lg shadow overflow-hidden">
+        <ul className="divide-y divide-sea-green/30">
           {courses.map((course) => (
             <li key={course.id}>
               <div className="px-4 py-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-lg font-medium text-gray-900 truncate">
-                      {course.title}
-                    </h3>
-                    <p className="mt-1 text-sm text-gray-500">
-                      {course.description}
-                    </p>
+                    <h3 className="font-heading text-heading text-spruce-dark truncate">{course.title}</h3>
+                    <p className="mt-1 text-base text-spruce-dark/80">{course.description}</p>
                   </div>
                   <div className="flex space-x-2">
-                    <button
-                      onClick={() => handleAddLesson(course)}
-                      className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    >
-                      <PlusIcon className="-ml-1 mr-1 h-4 w-4" />
-                      Урок
+                    <button onClick={() => handleAddLesson(course)} className="btn bg-opal-green text-floral-white hover:bg-spruce-dark">
+                      <PlusIcon className="-ml-1 mr-1 h-4 w-4" />Урок
                     </button>
-                    <button
-                      className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                    >
-                      <PencilIcon className="-ml-1 mr-1 h-4 w-4" />
-                      Редактировать
+                    <button className="btn bg-sea-green text-spruce-dark hover:bg-opal-green">
+                      <PencilIcon className="-ml-1 mr-1 h-4 w-4" />Редактировать
                     </button>
-                    <button
-                      onClick={() => handleDeleteCourse(course.id)}
-                      className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                    >
-                      <TrashIcon className="-ml-1 mr-1 h-4 w-4" />
-                      Удалить
+                    <button onClick={() => handleDeleteCourse(course.id)} className="btn bg-scarlet-red text-floral-white hover:bg-opal-green">
+                      <TrashIcon className="-ml-1 mr-1 h-4 w-4" />Удалить
                     </button>
                   </div>
                 </div>
                 <div className="mt-4">
-                  <h4 className="text-sm font-medium text-gray-900">Уроки:</h4>
-                  <ul className="mt-2 divide-y divide-gray-200">
+                  <h4 className="text-sm font-medium text-spruce-dark">Уроки:</h4>
+                  <ul className="mt-2 divide-y divide-sea-green/30">
                     {course.lessons.map((lesson) => (
                       <li key={lesson.id} className="py-2">
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="text-sm font-medium text-gray-900">{lesson.title}</p>
-                            <p className="text-sm text-gray-500">Длительность: {lesson.duration} мин.</p>
+                            <p className="text-sm font-medium text-spruce-dark">{lesson.title}</p>
+                            <p className="text-sm text-spruce-dark/70">Длительность: {lesson.duration} мин.</p>
                           </div>
                           <div className="flex space-x-2">
-                            <button
-                              className="text-gray-400 hover:text-gray-500"
-                            >
-                              <PencilIcon className="h-4 w-4" />
-                            </button>
-                            <button
-                              className="text-red-400 hover:text-red-500"
-                            >
-                              <TrashIcon className="h-4 w-4" />
-                            </button>
+                            <button className="text-sea-green hover:text-opal-green"><PencilIcon className="h-4 w-4" /></button>
+                            <button className="text-scarlet-red hover:text-opal-green"><TrashIcon className="h-4 w-4" /></button>
                           </div>
                         </div>
                       </li>

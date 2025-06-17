@@ -41,48 +41,25 @@ export default function NewsManagement() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-medium text-gray-900">Управление новостями</h2>
-        <button
-          onClick={handleAddNews}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          <PlusIcon className="-ml-1 mr-2 h-5 w-5" />
-          Добавить новость
+        <h2 className="subheading text-spruce-dark">Управление новостями</h2>
+        <button onClick={handleAddNews} className="btn">
+          <PlusIcon className="-ml-1 mr-2 h-5 w-5" />Добавить новость
         </button>
       </div>
-
-      <div className="bg-white shadow overflow-hidden sm:rounded-md">
-        <ul className="divide-y divide-gray-200">
+      <div className="bg-floral-white border border-sea-green rounded-lg shadow overflow-hidden">
+        <ul className="divide-y divide-sea-green/30">
           {news.map((item) => (
             <li key={item.id}>
               <div className="px-4 py-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-lg font-medium text-gray-900 truncate">
-                      {item.title}
-                    </h3>
-                    <div className="mt-2 flex items-center text-sm text-gray-500">
-                      <span>{item.author}</span>
-                      <span className="mx-2">•</span>
-                      <span>{new Date(item.date).toLocaleDateString()}</span>
-                    </div>
-                    <p className="mt-2 text-sm text-gray-500">{item.content}</p>
+                    <h3 className="font-heading text-heading text-spruce-dark truncate">{item.title}</h3>
+                    <p className="mt-1 text-base text-spruce-dark/80">{item.content}</p>
+                    <span className="text-opal-green text-sm">Автор: {item.author}</span>
                   </div>
                   <div className="flex space-x-2">
-                    <button
-                      onClick={() => handleEditNews(item)}
-                      className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                    >
-                      <PencilIcon className="-ml-1 mr-1 h-4 w-4" />
-                      Редактировать
-                    </button>
-                    <button
-                      onClick={() => handleDeleteNews(item.id)}
-                      className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                    >
-                      <TrashIcon className="-ml-1 mr-1 h-4 w-4" />
-                      Удалить
-                    </button>
+                    <button className="btn bg-sea-green text-spruce-dark hover:bg-opal-green"><PencilIcon className="-ml-1 mr-1 h-4 w-4" />Редактировать</button>
+                    <button className="btn bg-scarlet-red text-floral-white hover:bg-opal-green"><TrashIcon className="-ml-1 mr-1 h-4 w-4" />Удалить</button>
                   </div>
                 </div>
               </div>

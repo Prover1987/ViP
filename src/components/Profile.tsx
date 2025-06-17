@@ -1,74 +1,58 @@
-import { useState } from 'react';
-
-interface UserProfile {
-  name: string;
-  email: string;
-  position: string;
-  department: string;
-  completedCourses: number;
-  inProgressCourses: number;
-}
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Profile() {
-  const [profile] = useState<UserProfile>({
-    name: 'Иван Иванов',
-    email: 'ivan@example.com',
-    position: 'Разработчик',
-    department: 'IT',
-    completedCourses: 3,
-    inProgressCourses: 2,
-  });
+  const { user } = useAuth();
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold text-gray-900">Профиль</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Ваша личная информация и прогресс обучения
-        </p>
-      </div>
-
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div className="px-4 py-5 sm:px-6">
-          <h2 className="text-lg font-medium text-gray-900">Личная информация</h2>
+    <div className="max-w-3xl mx-auto py-12 px-4">
+      <h1 className="heading mb-8">Профиль сотрудника</h1>
+      <div className="bg-floral-white border border-sea-green rounded-lg shadow p-8">
+        <div className="mb-6">
+          <h2 className="subheading mb-2 text-spruce-dark">Личная информация</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <span className="text-opal-green font-medium">ФИО:</span>
+              <div className="text-base">{user?.fullName}</div>
+            </div>
+            <div>
+              <span className="text-opal-green font-medium">Email:</span>
+              <div className="text-base">{user?.email}</div>
+            </div>
+            <div>
+              <span className="text-opal-green font-medium">Должность:</span>
+              <div className="text-base">{user?.position}</div>
+            </div>
+            <div>
+              <span className="text-opal-green font-medium">Отдел:</span>
+              <div className="text-base">{user?.department}</div>
+            </div>
+          </div>
         </div>
-        <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-          <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-gray-500">ФИО</dt>
-              <dd className="mt-1 text-sm text-gray-900">{profile.name}</dd>
+        <div>
+          <h2 className="subheading mb-2 text-spruce-dark">Прогресс обучения</h2>
+          <div className="space-y-4">
+            <div>
+              <span className="font-medium">React для начинающих</span>
+              <div className="w-full bg-sea-green/30 rounded-full h-2 mt-1">
+                <div className="bg-opal-green h-2 rounded-full" style={{ width: '75%' }} />
+              </div>
+              <span className="text-xs text-opal-green">75%</span>
             </div>
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-gray-500">Email</dt>
-              <dd className="mt-1 text-sm text-gray-900">{profile.email}</dd>
+            <div>
+              <span className="font-medium">TypeScript основы</span>
+              <div className="w-full bg-sea-green/30 rounded-full h-2 mt-1">
+                <div className="bg-opal-green h-2 rounded-full" style={{ width: '30%' }} />
+              </div>
+              <span className="text-xs text-opal-green">30%</span>
             </div>
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-gray-500">Должность</dt>
-              <dd className="mt-1 text-sm text-gray-900">{profile.position}</dd>
+            <div>
+              <span className="font-medium">Tailwind CSS мастер-класс</span>
+              <div className="w-full bg-sea-green/30 rounded-full h-2 mt-1">
+                <div className="bg-opal-green h-2 rounded-full" style={{ width: '90%' }} />
+              </div>
+              <span className="text-xs text-opal-green">90%</span>
             </div>
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-gray-500">Отдел</dt>
-              <dd className="mt-1 text-sm text-gray-900">{profile.department}</dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div className="px-4 py-5 sm:px-6">
-          <h2 className="text-lg font-medium text-gray-900">Прогресс обучения</h2>
-        </div>
-        <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-          <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-gray-500">Завершенные курсы</dt>
-              <dd className="mt-1 text-sm text-gray-900">{profile.completedCourses}</dd>
-            </div>
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-gray-500">Курсы в процессе</dt>
-              <dd className="mt-1 text-sm text-gray-900">{profile.inProgressCourses}</dd>
-            </div>
-          </dl>
+          </div>
         </div>
       </div>
     </div>

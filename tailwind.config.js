@@ -31,6 +31,32 @@ export default {
           800: '#166534',
           900: '#14532d',
         },
+        spruce: {
+          dark: '#014131',
+        },
+        floral: {
+          white: '#FFF7EC',
+        },
+        scarlet: {
+          red: '#BA1D23',
+        },
+        opal: {
+          green: '#039A6E',
+        },
+        sea: {
+          green: '#A2C1BB',
+        },
+      },
+      fontFamily: {
+        heading: ['"Russo One"', 'sans-serif'],
+        sans: ['Raleway', 'sans-serif'],
+      },
+      fontSize: {
+        heading: ['30px', '1.2'],
+        subheading: ['18px', '1.2'],
+        base: ['12px', '1.5'],
+        note: ['12px', '1.2'],
+        comment: ['8px', '1.2'],
       },
     },
   },

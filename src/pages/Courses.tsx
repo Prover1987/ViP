@@ -6,7 +6,7 @@ const mockCourses: Course[] = [
   {
     id: '1',
     title: 'React для начинающих',
-    description: 'Изучите основы React и создавайте современные веб-приложения',
+    description: 'Базовый курс по React для начинающих разработчиков.',
     progress: 75,
     lessons: [
       {
@@ -35,7 +35,7 @@ const mockCourses: Course[] = [
   {
     id: '2',
     title: 'TypeScript основы',
-    description: 'Освойте TypeScript для более надежной разработки',
+    description: 'Изучение основ TypeScript для повышения качества кода.',
     progress: 30,
     lessons: [
       {
@@ -52,6 +52,15 @@ const mockCourses: Course[] = [
         duration: 50,
         completed: false,
       },
+    ],
+  },
+  {
+    id: '3',
+    title: 'Tailwind CSS мастер-класс',
+    description: 'Практический курс по Tailwind CSS.',
+    progress: 90,
+    lessons: [
+      // Add Tailwind CSS lessons here
     ],
   },
 ];
@@ -71,10 +80,27 @@ export default function Courses() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto">
-      <h1 className="text-2xl font-semibold text-gray-900 mb-8">Курсы</h1>
+    <div className="max-w-4xl mx-auto py-12 px-4">
+      <h1 className="heading mb-8">Курсы</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {courses.map((course) => (
+          <div key={course.id} className="bg-floral-white border border-sea-green rounded-lg shadow p-6 flex flex-col justify-between">
+            <div>
+              <h2 className="subheading mb-2 text-spruce-dark">{course.title}</h2>
+              <p className="text-base mb-4">{course.description}</p>
+            </div>
+            <div className="mt-2">
+              <div className="w-full bg-sea-green/30 rounded-full h-2 mb-1">
+                <div className="bg-opal-green h-2 rounded-full" style={{ width: `${course.progress}%` }} />
+              </div>
+              <span className="text-xs text-opal-green">{course.progress}% завершено</span>
+            </div>
+          </div>
+        ))}
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {/* Course Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
         {/* Course List */}
         <div className="lg:col-span-1">
           <div className="bg-white shadow rounded-lg">
@@ -93,18 +119,6 @@ export default function Courses() {
                   >
                     <h3 className="font-medium text-gray-900">{course.title}</h3>
                     <p className="text-sm text-gray-500 mt-1">{course.description}</p>
-                    <div className="mt-2">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-gray-500">Прогресс</span>
-                        <span className="text-primary-600">{course.progress}%</span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
-                        <div
-                          className="bg-primary-600 h-2 rounded-full"
-                          style={{ width: `${course.progress}%` }}
-                        />
-                      </div>
-                    </div>
                   </button>
                 ))}
               </div>

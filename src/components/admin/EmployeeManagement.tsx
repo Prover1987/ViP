@@ -12,7 +12,7 @@ interface Employee {
 }
 
 export default function EmployeeManagement() {
-  const [employees] = useState<Employee[]>([
+  const [employees, setEmployees] = useState<Employee[]>([
     {
       id: '1',
       name: 'Иван Иванов',
@@ -24,9 +24,11 @@ export default function EmployeeManagement() {
     },
   ]);
   const [isAddingEmployee, setIsAddingEmployee] = useState(false);
+  const [isEditingEmployee, setIsEditingEmployee] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
 
-  const handleEditEmployee = () => {
-    // ...
+  const handleDeleteEmployee = (employeeId: string) => {
+    setEmployees(employees.filter(emp => emp.id !== employeeId));
   };
 
   return (
@@ -55,7 +57,7 @@ export default function EmployeeManagement() {
                   <button
                     type="button"
                     className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-floral-white bg-spruce-dark hover:bg-opal-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opal-green transition-colors mr-2"
-                    onClick={() => handleEditEmployee()}
+                    onClick={() => setIsEditingEmployee(true)}
                   >
                     <PencilIcon className="-ml-1 mr-1 h-4 w-4" />Редактировать
                   </button>

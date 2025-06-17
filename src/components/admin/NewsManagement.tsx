@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { TrashIcon } from '@heroicons/react/24/outline';
 
 interface News {
   id: string;
@@ -10,7 +10,7 @@ interface News {
 }
 
 export default function NewsManagement() {
-  const [news] = useState<News[]>([
+  const [news, setNews] = useState<News[]>([
     {
       id: '1',
       title: 'Новый курс по React!',
@@ -20,13 +20,11 @@ export default function NewsManagement() {
     },
   ]);
   const [isAddingNews, setIsAddingNews] = useState(false);
+  const [isEditingNews, setIsEditingNews] = useState(false);
+  const [selectedNews, setSelectedNews] = useState<News | null>(null);
 
-  const handleAddNews = () => {
-    // ...
-  };
-
-  const handleEditNews = (item: News) => {
-    // ...
+  const handleDeleteNews = (newsId: string) => {
+    setNews(news.filter((item) => item.id !== newsId));
   };
 
   return (
@@ -56,7 +54,7 @@ export default function NewsManagement() {
                     <button
                       type="button"
                       className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-floral-white bg-spruce-dark hover:bg-opal-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opal-green transition-colors mr-2"
-                      onClick={() => handleEditNews(item)}
+                      onClick={() => setIsEditingNews(true)}
                     >
                       Редактировать
                     </button>

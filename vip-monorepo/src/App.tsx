@@ -7,20 +7,19 @@ import Courses from './pages/Courses';
 import News from './pages/News';
 import AdminPanel from './pages/AdminPanel';
 import PrivateRoute from './components/PrivateRoute';
-import Navbar from './components/Navbar';
+import Layout from './components/Layout';
 import './App.css';
 
 const App: React.FC = () => {
   return (
     <Router>
-      <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-        <Route path="/admin" element={<PrivateRoute><AdminPanel /></PrivateRoute>} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/news" element={<News />} />
+        <Route path="/profile" element={<PrivateRoute><Layout><Profile /></Layout></PrivateRoute>} />
+        <Route path="/admin" element={<PrivateRoute><Layout><AdminPanel /></Layout></PrivateRoute>} />
+        <Route path="/courses" element={<Layout><Courses /></Layout>} />
+        <Route path="/news" element={<Layout><News /></Layout>} />
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>

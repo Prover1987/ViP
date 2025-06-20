@@ -9,6 +9,7 @@ interface Course {
   author: string;
   isActive: boolean;
   createdAt: string;
+  progress: number;
 }
 
 const Courses: React.FC = () => {
@@ -36,27 +37,22 @@ const Courses: React.FC = () => {
   }, [token]);
 
   return (
-    <div className="max-w-4xl mx-auto py-10 px-4">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Курсы</h1>
-        {user?.role === 'admin' && (
-          <button className="bg-opal-green text-floral-white px-4 py-2 rounded hover:bg-spruce-dark transition-colors">
-            + Добавить курс
-          </button>
-        )}
-      </div>
-      {loading && <div>Загрузка...</div>}
-      {error && <div className="text-red-600 mb-4">{error}</div>}
-      <div className="grid gap-6 md:grid-cols-2">
-        {courses.map(course => (
-          <div key={course._id} className="bg-white rounded shadow p-6">
-            <h2 className="text-lg font-bold mb-2">{course.title}</h2>
-            <div className="text-spruce-dark/80 mb-2">{course.description}</div>
-            <div className="text-xs text-spruce-dark/60">Автор: {course.author}</div>
-            <div className="text-xs text-spruce-dark/60">Создан: {new Date(course.createdAt).toLocaleDateString()}</div>
-            {!course.isActive && <div className="text-xs text-red-600 mt-2">Неактивен</div>}
-          </div>
-        ))}
+    <div className="min-h-screen bg-floral-white py-10 px-2">
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-3xl font-bold mb-8 text-spruce-dark">Курсы</h2>
+        <div className="space-y-6">
+          {courses.map((course, idx) => (
+            <div key={idx} className="bg-white rounded-lg shadow p-6 border border-sea-green">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-bold text-lg text-spruce-dark">{course.title}</span>
+                <span className="text-xs text-opal-green font-semibold">{course.progress}%</span>
+              </div>
+              <div className="w-full bg-sea-green/30 rounded-full h-2 mb-2">
+                <div className="bg-opal-green h-2 rounded-full transition-all duration-500" style={{ width: `${course.progress}%` }} />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

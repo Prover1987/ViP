@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
       <div className="flex items-center space-x-4">
         {user ? (
           <>
-            <Link to="/profile" className="hover:text-opal-green transition-colors">{user.fullName}</Link>
+            <Link to="/profile" className="hover:text-opal-green transition-colors">{user.fullName || user.email}</Link>
             <button
               onClick={handleLogout}
               className="bg-opal-green text-floral-white px-4 py-1 rounded hover:bg-spruce-dark border border-opal-green transition-colors"

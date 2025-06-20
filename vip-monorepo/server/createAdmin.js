@@ -3,8 +3,8 @@ const bcrypt = require('bcryptjs');
 const User = require('./models/User');
 require('dotenv').config();
 
-const email = 'admin'; // Измени на нужный email
-const password = 'admin';       // Измени на нужный пароль
+const email = 'admin@example.com'; // Email для входа
+const password = 'admin123';       // Пароль для входа
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(async () => {

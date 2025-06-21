@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import Modal from '../components/Modal';
+import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 interface Course {
   _id: string;
@@ -38,27 +39,35 @@ const AdminPanel: React.FC = () => {
   const [newsForm, setNewsForm] = useState({ title: '', content: '', author: '', isActive: true });
   const [newsFormError, setNewsFormError] = useState('');
 
-  // Fetch courses
+  const fetchCourses = () => {
+    setLoading(true);
+    setError('');
+    axios.get<Course[]>('/api/courses', {
+      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+    })
+      .then(res => setCourses(res.data))
+      .catch(() => setError('Ошибка загрузки курсов'))
+      .then(() => setLoading(false));
+  };
+  
+  const fetchNews = () => {
+    setLoading(true);
+    setError('');
+    axios.get<NewsItem[]>('/api/news', {
+      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+    })
+      .then(res => setNews(res.data))
+      .catch(() => setError('Ошибка загрузки новостей'))
+      .then(() => setLoading(false));
+  };
+
+  // Fetch data
   useEffect(() => {
     if (tab === 'courses') {
-      setLoading(true);
-      setError('');
-      axios.get<Course[]>('/api/courses', {
-        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-      })
-        .then(res => setCourses(res.data))
-        .catch(() => setError('Ошибка загрузки курсов'))
-        .then(() => setLoading(false));
+      fetchCourses();
     }
     if (tab === 'news') {
-      setLoading(true);
-      setError('');
-      axios.get<NewsItem[]>('/api/news', {
-        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-      })
-        .then(res => setNews(res.data))
-        .catch(() => setError('Ошибка загрузки новостей'))
-        .then(() => setLoading(false));
+      fetchNews();
     }
   }, [tab, token]);
 
@@ -173,62 +182,76 @@ const AdminPanel: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-10 px-4">
-      <h1 className="text-2xl font-bold mb-6">Административная панель</h1>
-      <div className="flex space-x-4 mb-8">
+    <div className="p-6 md:p-10 bg-floral-white min-h-full">
+      <h1 className="text-3xl font-bold text-spruce-dark mb-4">Административная панель</h1>
+      <p className="mb-8 text-spruce-dark/80">Здесь вы можете управлять курсами, новостями и другими разделами портала.</p>
+
+      {/* Табы */}
+      <div className="flex border-b border-sea-green/30 mb-8">
         <button
-          className={`px-4 py-2 rounded ${tab === 'courses' ? 'bg-opal-green text-floral-white' : 'bg-gray-200 text-spruce-dark'}`}
+          className={`px-4 py-3 -mb-px border-b-2 font-semibold transition-colors ${tab === 'courses' ? 'text-opal-green border-opal-green' : 'text-spruce-dark/70 border-transparent hover:text-spruce-dark'}`}
           onClick={() => setTab('courses')}
         >
           Курсы
         </button>
         <button
-          className={`px-4 py-2 rounded ${tab === 'news' ? 'bg-opal-green text-floral-white' : 'bg-gray-200 text-spruce-dark'}`}
+          className={`px-4 py-3 -mb-px border-b-2 font-semibold transition-colors ${tab === 'news' ? 'text-opal-green border-opal-green' : 'text-spruce-dark/70 border-transparent hover:text-spruce-dark'}`}
           onClick={() => setTab('news')}
         >
           Новости
         </button>
       </div>
-      {loading && <div>Загрузка...</div>}
-      {error && <div className="text-red-600 mb-4">{error}</div>}
+
+      {/* Контент */}
+      {loading && <div className="text-center py-10">Загрузка...</div>}
+      {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">{error}</div>}
+      
       {tab === 'courses' && (
         <div>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Управление курсами</h2>
-            <button onClick={openAddCourse} className="bg-opal-green text-floral-white px-4 py-2 rounded hover:bg-spruce-dark transition-colors">
-              + Добавить курс
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-semibold text-spruce-dark">Управление курсами</h2>
+            <button onClick={openAddCourse} className="flex items-center gap-2 bg-opal-green text-floral-white px-4 py-2 rounded-lg shadow hover:bg-spruce-dark transition-colors font-semibold">
+              <PlusIcon className="h-5 w-5" />
+              Добавить курс
             </button>
           </div>
-          <div className="space-y-4">
-            {courses.map(course => (
-              <div key={course._id} className="bg-white rounded shadow p-4 flex justify-between items-center">
-                <div>
-                  <div className="font-bold">{course.title}</div>
-                  <div className="text-spruce-dark/80 text-sm">{course.description}</div>
-                  <div className="text-xs text-spruce-dark/60">Автор: {course.author}</div>
-                  <div className="text-xs text-spruce-dark/60">Создан: {new Date(course.createdAt).toLocaleDateString()}</div>
-                  {!course.isActive && <div className="text-xs text-red-600 mt-2">Неактивен</div>}
-                </div>
-                <div className="flex gap-2">
-                  <button onClick={() => openEditCourse(course)} className="bg-spruce-dark text-floral-white px-3 py-1 rounded hover:bg-opal-green transition-colors">Редактировать</button>
-                  <button onClick={() => handleDeleteCourse(course._id)} className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition-colors">Удалить</button>
-                </div>
-              </div>
-            ))}
+          <div className="bg-white rounded-lg shadow overflow-hidden">
+            <ul className="divide-y divide-gray-200">
+              {courses.map(course => (
+                <li key={course._id} className="p-4 sm:p-6 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <p className="text-lg font-bold text-spruce-dark">{course.title}</p>
+                        {!course.isActive && <span className="text-xs font-semibold text-red-700 bg-red-100 px-2 py-0.5 rounded-full">Неактивен</span>}
+                      </div>
+                      <p className="text-spruce-dark/80 text-sm mt-1">{course.description}</p>
+                      <div className="text-xs text-spruce-dark/60 mt-2">Автор: {course.author} | Создан: {new Date(course.createdAt).toLocaleDateString()}</div>
+                    </div>
+                    <div className="flex gap-2 ml-4">
+                      <button onClick={() => openEditCourse(course)} className="p-2 text-spruce-dark/70 hover:text-opal-green transition-colors"><PencilIcon className="h-5 w-5" /></button>
+                      <button onClick={() => handleDeleteCourse(course._id)} className="p-2 text-spruce-dark/70 hover:text-red-600 transition-colors"><TrashIcon className="h-5 w-5" /></button>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
           {/* Модалка для курса */}
           {showCourseModal && (
             <Modal onClose={() => setShowCourseModal(false)}>
-              <form onSubmit={handleCourseFormSubmit} className="space-y-4 p-4">
-                <h3 className="text-lg font-bold mb-2">{editingCourse ? 'Редактировать курс' : 'Добавить курс'}</h3>
-                <input name="title" value={courseForm.title} onChange={handleCourseFormChange} placeholder="Название" className="w-full border rounded px-2 py-1" />
-                <textarea name="description" value={courseForm.description} onChange={handleCourseFormChange} placeholder="Описание" className="w-full border rounded px-2 py-1" />
-                <input name="author" value={courseForm.author} onChange={handleCourseFormChange} placeholder="Автор" className="w-full border rounded px-2 py-1" />
-                <label className="flex items-center gap-2"><input type="checkbox" name="isActive" checked={courseForm.isActive} onChange={handleCourseFormChange} /> Активен</label>
-                {courseFormError && <div className="text-red-600">{courseFormError}</div>}
-                <div className="flex gap-2 justify-end">
-                  <button type="button" onClick={() => setShowCourseModal(false)} className="px-4 py-2 rounded bg-gray-200">Отмена</button>
-                  <button type="submit" className="px-4 py-2 rounded bg-opal-green text-floral-white">Сохранить</button>
+              <form onSubmit={handleCourseFormSubmit} className="p-6">
+                <h3 className="text-xl font-bold text-spruce-dark mb-4">{editingCourse ? 'Редактировать курс' : 'Добавить курс'}</h3>
+                <div className="space-y-4">
+                  <input name="title" value={courseForm.title} onChange={handleCourseFormChange} placeholder="Название" className="w-full border-sea-green/50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-opal-green" />
+                  <textarea name="description" value={courseForm.description} onChange={handleCourseFormChange} placeholder="Описание" className="w-full border-sea-green/50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-opal-green" rows={4} />
+                  <input name="author" value={courseForm.author} onChange={handleCourseFormChange} placeholder="Автор" className="w-full border-sea-green/50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-opal-green" />
+                  <label className="flex items-center gap-2 text-spruce-dark"><input type="checkbox" name="isActive" checked={courseForm.isActive} onChange={handleCourseFormChange} className="h-4 w-4 rounded text-opal-green focus:ring-opal-green" /> Активен</label>
+                </div>
+                {courseFormError && <div className="text-red-600 mt-4">{courseFormError}</div>}
+                <div className="flex gap-4 justify-end mt-6">
+                  <button type="button" onClick={() => setShowCourseModal(false)} className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 transition-colors font-semibold">Отмена</button>
+                  <button type="submit" className="px-4 py-2 rounded-lg bg-opal-green text-floral-white hover:bg-spruce-dark transition-colors font-semibold">Сохранить</button>
                 </div>
               </form>
             </Modal>
@@ -237,42 +260,49 @@ const AdminPanel: React.FC = () => {
       )}
       {tab === 'news' && (
         <div>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Управление новостями</h2>
-            <button onClick={openAddNews} className="bg-opal-green text-floral-white px-4 py-2 rounded hover:bg-spruce-dark transition-colors">
-              + Добавить новость
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-semibold text-spruce-dark">Управление новостями</h2>
+            <button onClick={openAddNews} className="flex items-center gap-2 bg-opal-green text-floral-white px-4 py-2 rounded-lg shadow hover:bg-spruce-dark transition-colors font-semibold">
+              <PlusIcon className="h-5 w-5" />
+              Добавить новость
             </button>
           </div>
-          <div className="space-y-4">
-            {news.map(item => (
-              <div key={item._id} className="bg-white rounded shadow p-4 flex justify-between items-center">
-                <div>
-                  <div className="font-bold">{item.title}</div>
-                  <div className="text-spruce-dark/80 text-sm">{item.content}</div>
-                  <div className="text-xs text-spruce-dark/60">Автор: {item.author}</div>
-                  <div className="text-xs text-spruce-dark/60">Создана: {new Date(item.createdAt).toLocaleDateString()}</div>
-                  {!item.isActive && <div className="text-xs text-red-600 mt-2">Неактивна</div>}
-                </div>
-                <div className="flex gap-2">
-                  <button onClick={() => openEditNews(item)} className="bg-spruce-dark text-floral-white px-3 py-1 rounded hover:bg-opal-green transition-colors">Редактировать</button>
-                  <button onClick={() => handleDeleteNews(item._id)} className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition-colors">Удалить</button>
-                </div>
-              </div>
-            ))}
+          <div className="bg-white rounded-lg shadow overflow-hidden">
+            <ul className="divide-y divide-gray-200">
+              {news.map(item => (
+                <li key={item._id} className="p-4 sm:p-6 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <p className="text-lg font-bold text-spruce-dark">{item.title}</p>
+                        {!item.isActive && <span className="text-xs font-semibold text-red-700 bg-red-100 px-2 py-0.5 rounded-full">Неактивна</span>}
+                      </div>
+                      <div className="text-xs text-spruce-dark/60 mt-2">Автор: {item.author} | Создана: {new Date(item.createdAt).toLocaleDateString()}</div>
+                    </div>
+                    <div className="flex gap-2 ml-4">
+                      <button onClick={() => openEditNews(item)} className="p-2 text-spruce-dark/70 hover:text-opal-green transition-colors"><PencilIcon className="h-5 w-5" /></button>
+                      <button onClick={() => handleDeleteNews(item._id)} className="p-2 text-spruce-dark/70 hover:text-red-600 transition-colors"><TrashIcon className="h-5 w-5" /></button>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
-          {/* Модалка для новости */}
+          {/* Модалка для новостей */}
           {showNewsModal && (
             <Modal onClose={() => setShowNewsModal(false)}>
-              <form onSubmit={handleNewsFormSubmit} className="space-y-4 p-4">
-                <h3 className="text-lg font-bold mb-2">{editingNews ? 'Редактировать новость' : 'Добавить новость'}</h3>
-                <input name="title" value={newsForm.title} onChange={handleNewsFormChange} placeholder="Заголовок" className="w-full border rounded px-2 py-1" />
-                <textarea name="content" value={newsForm.content} onChange={handleNewsFormChange} placeholder="Текст новости" className="w-full border rounded px-2 py-1" />
-                <input name="author" value={newsForm.author} onChange={handleNewsFormChange} placeholder="Автор" className="w-full border rounded px-2 py-1" />
-                <label className="flex items-center gap-2"><input type="checkbox" name="isActive" checked={newsForm.isActive} onChange={handleNewsFormChange} /> Активна</label>
-                {newsFormError && <div className="text-red-600">{newsFormError}</div>}
-                <div className="flex gap-2 justify-end">
-                  <button type="button" onClick={() => setShowNewsModal(false)} className="px-4 py-2 rounded bg-gray-200">Отмена</button>
-                  <button type="submit" className="px-4 py-2 rounded bg-opal-green text-floral-white">Сохранить</button>
+              <form onSubmit={handleNewsFormSubmit} className="p-6">
+                <h3 className="text-xl font-bold text-spruce-dark mb-4">{editingNews ? 'Редактировать новость' : 'Добавить новость'}</h3>
+                <div className="space-y-4">
+                  <input name="title" value={newsForm.title} onChange={handleNewsFormChange} placeholder="Заголовок" className="w-full border-sea-green/50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-opal-green" />
+                  <textarea name="content" value={newsForm.content} onChange={handleNewsFormChange} placeholder="Содержание" className="w-full border-sea-green/50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-opal-green" rows={6} />
+                  <input name="author" value={newsForm.author} onChange={handleNewsFormChange} placeholder="Автор" className="w-full border-sea-green/50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-opal-green" />
+                  <label className="flex items-center gap-2 text-spruce-dark"><input type="checkbox" name="isActive" checked={newsForm.isActive} onChange={handleNewsFormChange} className="h-4 w-4 rounded text-opal-green focus:ring-opal-green" /> Активна</label>
+                </div>
+                {newsFormError && <div className="text-red-600 mt-4">{newsFormError}</div>}
+                <div className="flex gap-4 justify-end mt-6">
+                  <button type="button" onClick={() => setShowNewsModal(false)} className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 transition-colors font-semibold">Отмена</button>
+                  <button type="submit" className="px-4 py-2 rounded-lg bg-opal-green text-floral-white hover:bg-spruce-dark transition-colors font-semibold">Сохранить</button>
                 </div>
               </form>
             </Modal>

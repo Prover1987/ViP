@@ -19,7 +19,6 @@ const navigation = [
   { name: 'Главная', href: '/', icon: HomeIcon },
   { name: 'Профиль', href: '/profile', icon: UserIcon },
   { name: 'Курсы', href: '/courses', icon: BookOpenIcon },
-  { name: 'Прогресс', href: '/progress', icon: ChartBarIcon },
 ];
 
 const adminNavigation = [
@@ -76,11 +75,7 @@ export default function Layout({ children }: LayoutProps) {
                 </Transition.Child>
                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-floral-white px-6 pb-4">
                   <div className="flex h-16 shrink-0 items-center">
-                    <img
-                      className="h-8 w-auto"
-                      src="/logo.svg"
-                      alt="Company Logo"
-                    />
+                    <h1 className="text-2xl font-bold text-spruce-dark">ViP</h1>
                   </div>
                   <nav className="flex flex-1 flex-col">
                     <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -150,11 +145,7 @@ export default function Layout({ children }: LayoutProps) {
       <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
         <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-sea-green/30 bg-floral-white px-6 pb-4">
           <div className="flex h-16 shrink-0 items-center">
-            <img
-              className="h-8 w-auto"
-              src="/logo.svg"
-              alt="Company Logo"
-            />
+            <h1 className="text-2xl font-bold text-spruce-dark">ViP</h1>
           </div>
           <nav className="flex flex-1 flex-col">
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -218,9 +209,23 @@ export default function Layout({ children }: LayoutProps) {
 
       {/* Контент */}
       <div className="lg:pl-72">
-        <div className="px-4 py-6 sm:px-6 lg:px-8">
-          {children}
+        <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 lg:px-8">
+          <button type="button" className="-m-2.5 p-2.5 text-gray-700 lg:hidden" onClick={() => setSidebarOpen(true)}>
+            <span className="sr-only">Открыть сайдбар</span>
+            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+          </button>
+          
+          <div className="h-6 w-px bg-gray-900/10 lg:hidden" aria-hidden="true" />
+
+          <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
+            <div className="relative flex flex-1" />
+          </div>
         </div>
+        <main>
+          <div className="px-4 py-10 sm:px-6 lg:px-8">
+            {children}
+          </div>
+        </main>
       </div>
     </div>
   );

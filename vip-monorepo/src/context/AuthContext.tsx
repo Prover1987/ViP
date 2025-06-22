@@ -1,10 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 
-// Настраиваем базовый URL для всех запросов axios
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
-// --- ИНТЕРФЕЙСЫ ---
 interface User {
   fullName: string;
   email: string;
@@ -21,35 +19,33 @@ interface AuthContextType {
   loading: boolean;
 }
 
-// --- КОНТЕКСТ ---
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// --- ПРОВАЙДЕР ---
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
-  const [loading, setLoading] = useState(true); // Начинаем с true для проверки токена
+  const [loading, setLoading] = useState(true);
 
-  // Проверка токена при первоначальной загрузке
   useEffect(() => {
     if (token) {
       axios.get<User>('/api/auth/profile', {
         headers: { Authorization: `Bearer ${token}` },
       })
-        .then(res => setUser(res.data))
-        .catch(() => {
-          // Если токен невалидный, выходим из системы
-          localStorage.removeItem('token');
-          setToken(null);
-          setUser(null);
-        })
-        .then(() => setLoading(false));
+      .then(res => {
+        setUser(res.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        localStorage.removeItem('token');
+        setToken(null);
+        setUser(null);
+        setLoading(false);
+      });
     } else {
-      setLoading(false); // Токена нет, просто прекращаем загрузку
+      setLoading(false);
     }
   }, [token]);
 
-  // Функция входа
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
@@ -59,25 +55,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(res.data.user);
     } catch (error) {
       console.error("Login failed:", error);
-      // Пробрасываем ошибку дальше, чтобы компонент Login мог ее обработать
       throw error;
     } finally {
       setLoading(false);
     }
   };
 
-  // Функция выхода
   const logout = () => {
     setToken(null);
     setUser(null);
     localStorage.removeItem('token');
   };
-
-  // Не рендерим дочерние элементы, пока идет проверка токена
-  if (loading) {
-    return <div>Загрузка аутентификации...</div>;
-  }
-
+  
   return (
     <AuthContext.Provider value={{ user, token, login, logout, loading }}>
       {children}
@@ -85,11 +74,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// --- ХУК ---
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-}; 
+};

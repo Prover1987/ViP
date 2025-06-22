@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (token) {
-      axios.get<User>('/api/auth/profile', {
+      axios.get<User>('/profile', {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(res => setUser(res.data))
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
-      const res = await axios.post<{ token: string; user: User }>('/api/auth/login', { email, password });
+      const res = await axios.post<{ token: string; user: User }>('/login', { email, password });
       setToken(res.data.token);
       localStorage.setItem('token', res.data.token);
       setUser(res.data.user);

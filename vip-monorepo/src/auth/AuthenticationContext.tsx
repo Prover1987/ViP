@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Настраиваем базовый URL для всех API-запросов
 // На Render будет использован REACT_APP_API_URL, а локально - http://localhost:5000
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 interface User {
   fullName: string;
@@ -29,23 +29,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (token) {
-      axios.get<User>('/api/auth/profile', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(res => {
-        setUser(res.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        localStorage.removeItem('token');
-        setToken(null);
-        setUser(null);
-        setLoading(false);
-      });
-    } else {
+    const fetchUser = async () => {
+      if (token) {
+        try {
+          const res = await axios.get<User>('/api/auth/profile', {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setUser(res.data);
+        } catch (error) {
+          localStorage.removeItem('token');
+          setToken(null);
+          setUser(null);
+        }
+      }
       setLoading(false);
-    }
+    };
+    fetchUser();
   }, [token]);
 
   const login = async (email: string, password: string) => {
@@ -71,7 +70,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider value={{ user, token, login, logout, loading }}>
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
@@ -82,4 +81,4 @@ export const useAuth = () => {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-}; 
+};

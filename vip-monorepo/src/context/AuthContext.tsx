@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 
+// Устанавливаем базовый URL для всех запросов axios
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 interface User {
   fullName: string;
   email: string;

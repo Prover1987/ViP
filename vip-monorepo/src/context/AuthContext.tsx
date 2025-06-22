@@ -1,8 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 
-// Устанавливаем базовый URL для всех запросов axios
-axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 interface User {
   fullName: string;
@@ -29,7 +28,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (token) {
-      axios.get<User>('/profile', {
+      axios.get<User>('/api/auth/profile', {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(res => setUser(res.data))
@@ -42,7 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
-      const res = await axios.post<{ token: string; user: User }>('/login', { email, password });
+      const res = await axios.post<{ token: string; user: User }>('/api/auth/login', { email, password });
       setToken(res.data.token);
       localStorage.setItem('token', res.data.token);
       setUser(res.data.user);

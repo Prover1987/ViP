@@ -7,7 +7,11 @@ const createAdmin = require('./createAdmin');
 const app = express();
 
 // Разрешаем все CORS-запросы
-app.use(cors());
+const corsOptions = {
+  origin: 'https://vip-1-iwta.onrender.com',
+  credentials: true
+};
+app.use(cors(corsOptions));
 
 app.use(express.json());
 

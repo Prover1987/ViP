@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthenticationContext';
 import Modal from '../components/Modal';
 import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/outline';
 

@@ -4,7 +4,7 @@ import Layout from './components/Layout';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import Courses from './components/Courses';
-import Progress from './components/Progress';
+//import Progress from './components/Progress';
 import Login from './components/Login';
 import AdminPanel from './components/admin/AdminPanel';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
@@ -39,7 +39,7 @@ function AppContent() {
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/courses" element={<Courses />} />
-            <Route path="/progress" element={<Progress />} />
+            {/* <Route path="/progress" element={<Progress />} /> */}
             {user?.role === 'admin' && (
               <Route path="/admin" element={<AdminPanel />} />
             )}

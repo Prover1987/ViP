@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 
+// Настраиваем базовый URL для всех API-запросов
+// На Render будет использован REACT_APP_API_URL, а локально - http://localhost:5000
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 interface User {
@@ -33,13 +35,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       })
       .then(res => {
         setUser(res.data);
+        setLoading(false);
       })
       .catch(() => {
         localStorage.removeItem('token');
         setToken(null);
         setUser(null);
-      })
-      .then(() => {
         setLoading(false);
       });
     } else {
@@ -81,4 +82,4 @@ export const useAuth = () => {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-}; 
+};

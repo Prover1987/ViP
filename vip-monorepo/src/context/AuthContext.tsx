@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setToken(null);
           setUser(null);
         })
-        .finally(() => setLoading(false));
+        .then(() => setLoading(false));
     } else {
       setLoading(false); // Токена нет, просто прекращаем загрузку
     }

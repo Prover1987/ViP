@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthenticationContext';
+import { useAuth } from '../auth/AuthenticationContext';
 
 interface PrivateRouteProps {
-  children: React.ReactElement;
+  children: ReactNode;
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../context/AuthenticationContext';
+import { useAuth } from '../auth/AuthenticationContext';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 

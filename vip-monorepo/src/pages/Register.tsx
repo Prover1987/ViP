@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../context/AuthenticationContext';
+import { useAuth } from '../auth/AuthenticationContext';
 
 const Register: React.FC = () => {
   const { login, loading } = useAuth();

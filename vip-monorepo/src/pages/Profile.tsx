@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../context/AuthenticationContext';
+import { useAuth } from '../auth/AuthenticationContext';
 import { useNavigate } from 'react-router-dom';
 
 const Profile: React.FC = () => {

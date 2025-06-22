@@ -1,24 +1,14 @@
 require('dotenv').config();
-const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const User = require('./models/User');
 
-const MONGO_URI = process.env.MONGO_URI;
-if (!MONGO_URI) {
-  console.error('Ошибка: Переменная окружения MONGO_URI не установлена.');
-  process.exit(1);
-}
-
 const createAdmin = async () => {
   try {
-    await mongoose.connect(MONGO_URI);
-    console.log('MongoDB подключена для создания админа...');
-
     const adminEmail = 'admin@example.com';
     const existingAdmin = await User.findOne({ email: adminEmail });
 
     if (existingAdmin) {
-      console.log('Администратор уже существует.');
+      console.log('Admin user already exists.');
       return;
     }
 
@@ -33,16 +23,13 @@ const createAdmin = async () => {
     });
 
     await admin.save();
-    console.log('Администратор успешно создан!');
+    console.log('Administrator successfully created!');
     console.log(`Email: ${adminEmail}`);
-    console.log(`Пароль: password123`);
+    console.log(`Password: password123`);
 
   } catch (error) {
-    console.error('Ошибка при создании администратора:', error);
-  } finally {
-    await mongoose.disconnect();
-    console.log('MongoDB соединение закрыто.');
+    console.error('Error during admin user creation:', error);
   }
 };
 
-createAdmin(); 
+module.exports = createAdmin; 

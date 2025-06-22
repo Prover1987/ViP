@@ -1,11 +1,10 @@
 {
-  "name": "vip-backend",
+  "name": "server",
   "version": "1.0.0",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node server.js",
-    "create-admin": "node createAdmin.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",

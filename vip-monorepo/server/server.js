@@ -5,18 +5,8 @@ const cors = require('cors');
 
 const app = express();
 
-// Настройка CORS
-const corsOptions = {
-  origin: function (origin, callback) {
-    // Разрешаем запросы с localhost и всех поддоменов onrender.com
-    if (!origin || origin.startsWith('http://localhost') || /onrender\.com$/.test(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-};
-app.use(cors(corsOptions));
+// ВРЕМЕННОЕ РЕШЕНИЕ: Разрешаем все CORS-запросы для диагностики
+app.use(cors());
 
 app.use(express.json());
 

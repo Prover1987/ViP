@@ -33,12 +33,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       })
       .then(res => {
         setUser(res.data);
-        setLoading(false);
       })
       .catch(() => {
         localStorage.removeItem('token');
         setToken(null);
         setUser(null);
+      })
+      .then(() => {
         setLoading(false);
       });
     } else {
@@ -66,7 +67,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
     localStorage.removeItem('token');
   };
-  
+
   return (
     <AuthContext.Provider value={{ user, token, login, logout, loading }}>
       {children}
@@ -80,4 +81,4 @@ export const useAuth = () => {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-};
+}; 

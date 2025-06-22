@@ -6,13 +6,10 @@ const cors = require('cors');
 const app = express();
 
 // Настройка CORS
-const allowedOrigins = [
-  'http://localhost:3000', // для локальной разработки
-  'https://vip-1-iwta.onrender.com' // ваш задеплоенный фронтенд
-];
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+  origin: function (origin, callback) {
+    // Разрешаем запросы с localhost и всех поддоменов onrender.com
+    if (!origin || origin.startsWith('http://localhost') || /onrender\.com$/.test(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
